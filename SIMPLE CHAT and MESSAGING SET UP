@@ -1,0 +1,90 @@
+######Code is in two parts. the server side and client side, that should be run separately
+## copy server side on a different IDE and Client side on another IDE
+### first run the server side and then client side
+## copy host name from the server side then initiate chat
+
+
+
+## FIRST THE SERVER SIDE
+
+
+
+
+### importing modules
+import socket
+import sys
+import time
+
+## end of import
+
+##variable section
+s = socket.socket()
+host = socket.gethostname()
+print('server is hosted on', host)
+port = 8080
+s.bind((host, port))
+print("")
+print("Server done binding to host and port successfully")
+print("")
+print("Server is waiting for incoming connections")
+print("")
+s.listen(1)
+conn, addr = s.accept()
+print(addr, 'has connected to the server and is now online....')
+print("")
+
+## to loop the server to run continiously
+
+while 1:
+    message = input(str(">>"))
+    message = message.encode()
+    conn.send(message)
+    print("message has been sent...")
+    print("")
+    incoming_message = conn.recv(1024)
+    incoming_message = incoming_message.decode()
+    print("Client:",incoming_message)
+    print("")
+
+
+
+
+
+
+#####BELOW IS THE CLIENT SIDE REMEmber you cant run both in the same ide
+
+
+
+
+
+#importing modules
+
+from email import message
+import socket
+import sys
+import time
+
+## creating variables
+s = socket.socket()
+host = input(str("please enter the hostname of the server: "))
+port = 8080
+s.connect((host, port))
+print("connected to chart server")
+
+
+## looping so it can run continiously
+
+while 1:
+    incoming_message = s.recv(1024)
+    incoming_message = incoming_message.decode()
+    print("server: ", incoming_message)
+    print("")
+
+    message = input(str(">> "))
+    message = message.encode()
+    s.send(message)
+    print("message has been sent...")
+    print("")
+
+
+
